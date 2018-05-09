@@ -1,0 +1,56 @@
+@font-face {
+    font-family: 'Arista-Pro';
+    src: url('../fonts/Arista-Pro-Regular-trial.ttf');
+}
+
+.title {
+    font-family: Arista-Pro;
+    font-size: 50px;
+}
+
+.logo {
+    height: 50px;
+}
+
+.list-item {
+    list-style-position: inside;
+    margin-bottom: -1px;
+    border: 1px solid lightgrey;
+    text-decoration: none;
+    padding: 5px;
+    padding-left: 10px;
+}
+
+.list-item:first-child {
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem
+}
+
+.list-item:last-child {
+    margin-bottom: 0;
+    border-bottom-right-radius: .25rem;
+    border-bottom-left-radius: .25rem
+}
+
+.list-item div.list-item-text {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.list-item img {
+    height: 50px;
+    min-width: 50px;
+    margin: 5px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.list-item:hover {
+    color: #495057;
+    text-decoration: none;
+    background-color: #f8f9fa
+}
+
+#amount {
+    width: 4em;
+}

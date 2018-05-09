@@ -3,11 +3,8 @@ package ru.abzaltdinov.stepiktopcourses.service;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -22,7 +19,6 @@ import java.util.*;
 public class CoursesLoaderService {
 
     private final StepikAPIClient stepikAPIClient;
-    private final String STEPIK_API_HOST = "https://stepik.org/api/";
 
     private Set<Course> allCourses = new HashSet<>();
     private ArrayList<Course> sortedCourses = new ArrayList<>();
@@ -30,15 +26,8 @@ public class CoursesLoaderService {
             Comparator.comparingLong(Course::getLearnersCount).reversed();
 
     @Autowired
-    public CoursesLoaderService() {
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl(STEPIK_API_HOST)
-                .build();
-        stepikAPIClient = retrofit.create(StepikAPIClient.class);
+    public CoursesLoaderService(StepikAPIClient stepikAPIClient) {
+        this.stepikAPIClient = stepikAPIClient;
     }
 
     public List<Course> getTopCourses(int amount) {
@@ -49,7 +38,7 @@ public class CoursesLoaderService {
             amount = sortedCourses.size();
         }
         List<Course> newCourses = loadNewCourses();
-        if (!allCourses.isEmpty()) {
+        if (allCourses.isEmpty()) {
             sortedCourses.addAll(newCourses);
             sortedCourses.sort(courseComparator);
         } else {
