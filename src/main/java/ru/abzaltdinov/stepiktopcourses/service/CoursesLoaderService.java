@@ -34,9 +34,6 @@ public class CoursesLoaderService {
         if (amount <= 0) {
             return null;
         }
-        if (amount > sortedCourses.size()) {
-            amount = sortedCourses.size();
-        }
         List<Course> newCourses = loadNewCourses();
         if (allCourses.isEmpty()) {
             sortedCourses.addAll(newCourses);
@@ -51,6 +48,9 @@ public class CoursesLoaderService {
             }
         }
         allCourses.addAll(newCourses);
+        if (amount > sortedCourses.size()) {
+            amount = sortedCourses.size();
+        }
         return sortedCourses.subList(0, amount);
     }
 
