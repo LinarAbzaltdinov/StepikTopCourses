@@ -23,15 +23,19 @@ public class CoursesLoaderService {
     private final StepikAPIClient stepikAPIClient;
     private final Logger logger = LoggerFactory.getLogger(CoursesLoaderService.class);
 
-    private Comparator<Course> courseComparator =
-            Comparator.comparingLong(Course::getLearnersCount).reversed();
-
-    private TreeSet<Course> allSortedCourses = new TreeSet<>(courseComparator);
+    private TreeSet<Course> allSortedCourses;
 
 
     @Autowired
     public CoursesLoaderService(StepikAPIClient stepikAPIClient) {
         this.stepikAPIClient = stepikAPIClient;
+        Comparator<Course> courseComparator = (course1, course2) -> {
+            if (course1.getLearnersCount() == course2.getLearnersCount()) {
+                return Integer.compare(course1.getId(), course2.getId());
+            }
+            return -Long.compare(course1.getLearnersCount(), course2.getLearnersCount());
+        };
+        allSortedCourses = new TreeSet<>(courseComparator);
     }
 
     public List<Course> getTopCourses(int amount) {
