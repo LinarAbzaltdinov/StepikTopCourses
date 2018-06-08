@@ -1,5 +1,5 @@
 # Stepik Top Courses
-Show courses on stepik.org with max learners count
+Show courses of [Stepik](stepik.org) sorted by learners count.
 
 ## Run
 1. Run in console `gradle bootRun`
